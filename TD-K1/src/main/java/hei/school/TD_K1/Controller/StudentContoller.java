@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import hei.school.TD_K1.Entity.ErrorQuery;
 import hei.school.TD_K1.Entity.StudentEntity;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,17 +28,20 @@ public class StudentContoller {
     }
 
     @PostMapping("/student")
-    public ResponseEntity<?> postMethodName(@RequestBody List<StudentEntity> students) {
+    public List<StudentEntity> postMethodName(@RequestBody List<StudentEntity> students) {
         studentsList.addAll(students);
-        return ResponseEntity.status(200).body(studentsList);
+        return studentsList;
     }
     
     @GetMapping("/student")
-    public ResponseEntity<?> getAllStudents(@RequestHeader(value = "Accept", required = false) String acceptHeader) {
+    public List<?> getAllStudents(@RequestHeader(value = "Accept", required = false) String acceptHeader) {
         if(acceptHeader.contains("text/plain")){
-            return ResponseEntity.status(200).body(studentsList);
+            return studentsList;
         }else{
-            return ResponseEntity.status(400).body("Format non supporté");
+            List<ErrorQuery> studentEntityError = new ArrayList<>();
+            ErrorQuery errorQuerie = new ErrorQuery("Format non supporté",500);
+            studentEntityError.add(errorQuerie);
+            return studentEntityError;
         }
        
         
