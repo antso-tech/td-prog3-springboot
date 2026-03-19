@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hei.school.TD_K1.Entity.StudentEntity;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 
 @RestController
@@ -28,6 +28,17 @@ public class StudentContoller {
     public List<StudentEntity> postMethodName(@RequestBody List<StudentEntity> students) {
         studentsList.addAll(students);
         return studentsList;
+    }
+    
+    @GetMapping("/student")
+    public String getAllStudents(@RequestHeader(value = "Accept", required = false) String acceptHeader) {
+        if(acceptHeader.contains("text/plain")){
+            return studentsList.toString();
+        }else{
+            return "It does not work";
+        }
+       
+        
     }
     
     
