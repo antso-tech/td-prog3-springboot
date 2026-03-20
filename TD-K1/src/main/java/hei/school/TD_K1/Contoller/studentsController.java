@@ -30,7 +30,7 @@ public class studentsController {
         }
     }
 
-     public ResponseEntity<List<StudentEntity>> getAllStudents(@RequestBody List<StudentEntity> studentEntity){
+     public ResponseEntity<List<StudentEntity>> createNewStudents(@RequestBody List<StudentEntity> studentEntity){
         studentsList.addAll(studentEntity);
         return ResponseEntity.status(201).body(studentsList);
 
