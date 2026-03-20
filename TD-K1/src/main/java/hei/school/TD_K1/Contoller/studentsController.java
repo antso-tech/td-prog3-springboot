@@ -38,12 +38,12 @@ public class studentsController {
 
      }
 
-     public ResponseEntity<?> getAllStudent(@RequestHeader("Accept") String acceptHeader){
+     public ResponseEntity<?> getAllStudent(@RequestHeader(value = "Accept", required = true) String acceptHeader){
         if (acceptHeader != null && acceptHeader.contains("text/plain") || acceptHeader.contains("application/json")) {
-            return ResponseEntity.status(0).body(studentsList);
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(studentsList);
             
         }else{
-            return ResponseEntity.status(HttpStatusCode.valueOf(500)).body("Format non supportée")
+            return ResponseEntity.status(HttpStatusCode.valueOf(500)).body("Format non supportée");
 
         }
         
