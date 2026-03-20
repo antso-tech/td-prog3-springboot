@@ -8,9 +8,11 @@ import hei.school.TD_K1.Entity.StudentEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -23,17 +25,28 @@ public class studentsController {
     @GetMapping("/welcome")
     public ResponseEntity<String> welcomeUser(@RequestParam String name) {
         if(name != null){
-            return ResponseEntity.status(200).body("Welcome " + name);
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body("Welcome " + name);
 
         }else{
-            return ResponseEntity.status(400).body("Vous devez fournir un nom");
+            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body("Vous devez fournir un nom");
         }
     }
 
      public ResponseEntity<List<StudentEntity>> createNewStudents(@RequestBody List<StudentEntity> studentEntity){
         studentsList.addAll(studentEntity);
-        return ResponseEntity.status(201).body(studentsList);
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(studentsList);
 
+     }
+
+     public ResponseEntity<?> getAllStudent(@RequestHeader("Accept") String acceptHeader){
+        if (acceptHeader != null && acceptHeader.contains("text/plain") || acceptHeader.contains("application/json")) {
+            return ResponseEntity.status(0).body(studentsList);
+            
+        }else{
+            return ResponseEntity.status(HttpStatusCode.valueOf(500)).body("Format non supportée")
+
+        }
+        
      }
 
      
