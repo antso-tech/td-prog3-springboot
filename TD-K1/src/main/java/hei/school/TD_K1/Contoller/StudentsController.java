@@ -42,9 +42,9 @@ public class StudentsController {
 
     @GetMapping("/student")
     public ResponseEntity<?> getAllStudents(@RequestHeader(value = "Accept", required = false) String acceptHeader) {
-
-        if (acceptHeader == null) {
-            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body("L'entête n'est pas présente");
+        try{
+       if (acceptHeader == null) {
+            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body("Accept doit être requis");
             
         }
 
@@ -57,8 +57,9 @@ public class StudentsController {
         else{
             return ResponseEntity.status(HttpStatusCode.valueOf(501)).body("Format non supporté");
         }
-
-        
+        }catch(Exception e){
+            return ResponseEntity.status(500).body(e);
+        }        
     }
     
 }
