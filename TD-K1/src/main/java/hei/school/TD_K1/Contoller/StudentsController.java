@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RestController
 public class StudentsController {
 
-    List<StudentEntity> studentsList = new ArrayList<>();
 
     @GetMapping("/welcome")
     public ResponseEntity<String> welcomeUser(@RequestParam String name) {
@@ -33,6 +32,8 @@ public class StudentsController {
             return ResponseEntity.status(HttpStatusCode.valueOf(400)).body("Vous devez fournir un nom");
         }
     }
+
+    
  
 }
 
