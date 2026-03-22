@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RestController
 public class StudentsController {
 
+    private List<StudentEntity> studentList = new ArrayList<>();
 
     @GetMapping("/welcome")
     public ResponseEntity<String> welcomeUser(@RequestParam String name) {
@@ -33,7 +34,32 @@ public class StudentsController {
         }
     }
 
+    @PostMapping("/student")
+    public ResponseEntity<List<StudentEntity>> createNewStudents(@RequestBody List<StudentEntity> students) {
+        studentList.addAll(students)  ; 
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(studentList);
+    }
+
+    @GetMapping("/student")
+    public ResponseEntity<?> getAllStudents(@RequestHeader(value = "Accept", required = false) String acceptHeader) {
+
+        if (acceptHeader == null) {
+            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body("L'entête n'est pas présente");
+            
+        }
+
+        if (acceptHeader.contains("application/json")) {
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(studentList);
+        }else if (acceptHeader.contains("text/plain")){
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(studentList.toString());
+
+        }
+        else{
+            return ResponseEntity.status(HttpStatusCode.valueOf(501)).body("Format non supporté");
+        }
+
+        
+    }
     
- 
 }
 
