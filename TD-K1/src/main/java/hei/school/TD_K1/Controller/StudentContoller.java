@@ -34,7 +34,7 @@ public class StudentContoller {
     }
     
     @GetMapping("/student")
-    public List<?> getAllStudents(@RequestHeader(value = "Accept", required = false) String acceptHeader) {
+    public List<?> getAllStudents(@RequestHeader(value = "Accept") String acceptHeader) {
         if(acceptHeader.contains("text/plain")){
             return studentsList;
         }else{
