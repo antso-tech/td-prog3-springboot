@@ -26,7 +26,7 @@ public class StudentsController {
 
     @GetMapping("/welcome")
     public ResponseEntity<String> welcomeUser(@RequestParam String name) {
-        if(name != null ){
+        if(name != null && !name.trim().isEmpty()){
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body("Welcome " + name);
 
         }else{
