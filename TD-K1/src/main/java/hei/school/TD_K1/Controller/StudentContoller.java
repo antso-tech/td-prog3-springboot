@@ -39,7 +39,7 @@ public class StudentContoller {
             return studentsList;
         }else{
             List<ErrorQuery> studentEntityError = new ArrayList<>();
-            ErrorQuery errorQuerie = new ErrorQuery("Format non supporté",500);
+            ErrorQuery errorQuerie = new ErrorQuery("Format non supporté",501);
             studentEntityError.add(errorQuerie);
             return studentEntityError;
         }
