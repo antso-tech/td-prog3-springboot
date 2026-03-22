@@ -33,29 +33,6 @@ public class StudentsController {
             return ResponseEntity.status(HttpStatusCode.valueOf(400)).body("Vous devez fournir un nom");
         }
     }
-
-   
-
-    @PostMapping("/student")  
-    public ResponseEntity<List<StudentEntity>> createNewStudents(@RequestBody List<StudentEntity> studentEntity){
-        studentsList.addAll(studentEntity);
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(studentsList);
-
-     }
-
-    @GetMapping("/student")    
-    public ResponseEntity<?> getAllStudent(@RequestHeader(value = "Accept", required = true) String acceptHeader){
-        if (acceptHeader != null && acceptHeader.contains("text/plain") || acceptHeader.contains("application/json")) {
-            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(getAllStudent(acceptHeader));
-            
-        }else{
-            return ResponseEntity.status(HttpStatusCode.valueOf(500)).body("Format non supportée");
-
-        }
-        
-     }
-
-     
-    
+ 
 }
 
