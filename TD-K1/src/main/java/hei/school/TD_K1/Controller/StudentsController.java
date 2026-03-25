@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,9 +40,11 @@ public class StudentsController {
     }
 
     @PostMapping("/student")
-    public ResponseEntity<List<StudentEntity>> createNewStudents(@RequestBody List<StudentEntity> students) {
+    public ResponseEntity<List<StudentEntity>> createNewStudents(@RequestBody List<StudentEntity> student) throws Exception {
         try {
-            return studentServices.createNewStudents(students);
+
+            List<StudentEntity> studentList = studentServices.createStudentServices(student);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(studentList);
         } catch (Exception e) {
             throw new Exception(e);
         }
