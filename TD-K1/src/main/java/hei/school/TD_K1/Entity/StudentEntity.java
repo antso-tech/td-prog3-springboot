@@ -40,7 +40,8 @@ public class StudentEntity {
         this.age = age;
     }
 
-    public String getFullName() {
+    @Override
+    public String toString() {
         return  firstName + " " + lastName;
     }
     

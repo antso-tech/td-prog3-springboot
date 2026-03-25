@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hei.school.TD_K1.Entity.StudentEntity;
 import hei.school.TD_K1.Services.StudentServices;
+import hei.school.TD_K1.Validate.Validate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping
 @RestController
 public class StudentsController {
-
+    @Autowired
+    private Validate validStudent;
 
     @Autowired
     private StudentServices studentServices;
 
     @GetMapping("/welcome")
     public ResponseEntity<String> welcomeUser(@RequestParam String name) {
+
         if(name != null && !name.trim().isEmpty()){
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body("Welcome " + name);
 
@@ -40,11 +42,14 @@ public class StudentsController {
     }
 
     @PostMapping("/student")
-    public ResponseEntity<List<StudentEntity>> createNewStudents(@RequestBody List<StudentEntity> student) throws Exception {
+    public ResponseEntity<?> createNewStudents(@RequestBody List<StudentEntity> student) throws Exception {
         try {
+ 
+            validStudent.validate(student);
+            
+            String studentList = studentServices.createStudentServices(student);
 
-            List<StudentEntity> studentList = studentServices.createStudentServices(student);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(studentList);
+            return ResponseEntity.status(HttpStatus.CREATED).body(studentList);
         } catch (Exception e) {
             throw new Exception(e);
         }
@@ -58,12 +63,7 @@ public class StudentsController {
             
         }
 
-        if (acceptHeader.contains("application/json")) {
-            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(studentList);
-        }else if (acceptHeader.contains("text/plain")){
-            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(studentList.toString());
 
-        }
         else{
             return ResponseEntity.status(HttpStatusCode.valueOf(501)).body("Format non supporté");
         }
