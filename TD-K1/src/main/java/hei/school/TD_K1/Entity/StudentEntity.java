@@ -42,8 +42,7 @@ public class StudentEntity {
 
     @Override
     public String toString() {
-        return "Reference: " + reference + ", firstName:" + firstName + ", lastName:" + lastName
-                + ", age:" + age ;
+        return  firstName + " " + lastName;
     }
     
     

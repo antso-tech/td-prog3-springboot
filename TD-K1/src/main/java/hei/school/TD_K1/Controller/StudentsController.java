@@ -1,13 +1,15 @@
-package hei.school.TD_K1.Contoller;
+package hei.school.TD_K1.Controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hei.school.TD_K1.Entity.StudentEntity;
+import hei.school.TD_K1.Services.StudentServices;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RestController
 public class StudentsController {
 
-    private List<StudentEntity> studentList = new ArrayList<>();
+
+    @Autowired
+    private StudentServices studentServices;
 
     @GetMapping("/welcome")
     public ResponseEntity<String> welcomeUser(@RequestParam String name) {
@@ -36,8 +40,11 @@ public class StudentsController {
 
     @PostMapping("/student")
     public ResponseEntity<List<StudentEntity>> createNewStudents(@RequestBody List<StudentEntity> students) {
-        studentList.addAll(students)  ; 
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(studentList);
+        try {
+            return studentServices.createNewStudents(students);
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
     }
 
     @GetMapping("/student")
