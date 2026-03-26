@@ -2,8 +2,6 @@ package hei.school.TD_K1.Controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.UnsupportedMediaTypeStatusException;
-
 import hei.school.TD_K1.Entity.StudentEntity;
 import hei.school.TD_K1.Exception.StudentException;
 import hei.school.TD_K1.Exception.UnsupportedMediaTypeException;
@@ -70,13 +68,15 @@ public class StudentsController {
             String studentList = studentServices.getAllStudentsServices();
 
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(studentList);
-        } catch(UnsupportedMediaTypeException e){
-            return ResponseEntity.status(HttpStatusCode.valueOf(501)).body(e.getMessage());
-        }
-        catch (StudentException e) {
-
+        }catch (StudentException e) {
             return ResponseEntity.status(HttpStatusCode.valueOf(400)).body(e.getMessage());
-        }catch(Exception e){
+
+        }
+        catch(UnsupportedMediaTypeException e){
+            return ResponseEntity.status(HttpStatusCode.valueOf(501)).body(e.getMessage());
+            
+        }
+        catch(Exception e){
             return ResponseEntity.status(HttpStatusCode.valueOf(500)).body(e.getMessage());
 
         }
