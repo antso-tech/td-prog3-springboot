@@ -10,7 +10,7 @@ import hei.school.TD_K1.Exception.StudentException;
 
 @Component
 public class Validate {
-    public void validate(List<StudentEntity> student) throws Exception{
+    public void validate(List<StudentEntity> student){
     
         for (StudentEntity std : student) {
             if(std == null){
@@ -21,7 +21,7 @@ public class Validate {
 
             }else if(std.getLastName() == null || std.getLastName().isBlank()){
                 throw new StudentException("Données incompletes");
-                
+
             }else if(std.getReference() == null || std.getReference().isBlank()){
                 throw new StudentException("Données incompletes");
                 

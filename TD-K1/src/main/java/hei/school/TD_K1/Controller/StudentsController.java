@@ -7,6 +7,7 @@ import hei.school.TD_K1.Exception.StudentException;
 import hei.school.TD_K1.Exception.UnsupportedMediaTypeException;
 import hei.school.TD_K1.Services.StudentServices;
 import hei.school.TD_K1.Validate.GetStudentValidate;
+import hei.school.TD_K1.Validate.GetWelcomeValidate;
 import hei.school.TD_K1.Validate.Validate;
 
 import java.util.List;
@@ -26,6 +27,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping
 @RestController
 public class StudentsController {
+
+    @Autowired 
+    private GetWelcomeValidate welcomeValidate;
+
     @Autowired
     private Validate validStudent;
 
@@ -37,17 +42,19 @@ public class StudentsController {
 
     @GetMapping("/welcome")
     public ResponseEntity<String> welcomeUser(@RequestParam String name) {
+        try{
+            welcomeValidate.getWelcomeValidate(name);
 
-        if(name != null && !name.trim().isEmpty()){
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body("Welcome " + name);
 
-        }else{
-            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body("Vous devez fournir un nom");
+        }catch(StudentException e){
+            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body(e.getMessage());
         }
+
     }
 
     @PostMapping("/student")
-    public ResponseEntity<?> createNewStudents(@RequestBody List<StudentEntity> student) throws Exception {
+    public ResponseEntity<?> createNewStudents(@RequestBody List<StudentEntity> student) {
         try {
  
             validStudent.validate(student);
