@@ -3,20 +3,21 @@ package hei.school.TD_K1.Validate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import hei.school.TD_K1.Exception.StudentException;
+
 @Component
 public class GetStudentValidate {
-    public void getStudentHeaderValidate(@RequestHeader String AcceptRequest) throws Exception{
-        if (AcceptRequest == null) {
-            throw new Exception("Le header n'est va valable");
+    public void getStudentHeaderValidate(String AcceptRequest){
+        if (AcceptRequest == null || AcceptRequest.isBlank()) {
+            throw new StudentException("Le header Accept doit être requis");
             
         }
-        if(!AcceptRequest.contains("text/plain")){
-            throw new Exception("Format non supporté !");
-            
-        }else if(!AcceptRequest.contains("application/JSON")){
-            throw new Exception("Format non supporté !");
 
+        boolean jsonVerified = AcceptRequest.contains("text/plain") || AcceptRequest.contains("application/json");
+
+        if (!jsonVerified) {
+            throw new StudentException("Format non supporté");
+            
         }
     }
-    
 }

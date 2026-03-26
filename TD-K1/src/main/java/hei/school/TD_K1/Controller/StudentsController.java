@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hei.school.TD_K1.Entity.StudentEntity;
+import hei.school.TD_K1.Exception.StudentException;
 import hei.school.TD_K1.Services.StudentServices;
 import hei.school.TD_K1.Validate.GetStudentValidate;
 import hei.school.TD_K1.Validate.Validate;
@@ -54,8 +55,8 @@ public class StudentsController {
             String studentList = studentServices.createStudentServices(student);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(studentList);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("");
+        } catch (StudentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -66,10 +67,10 @@ public class StudentsController {
 
             String studentList = studentServices.getAllStudentsServices();
 
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(studentList);
-        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(studentList);
+        } catch (StudentException e) {
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("");
+            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body(e.getMessage());
         }
     }
     
