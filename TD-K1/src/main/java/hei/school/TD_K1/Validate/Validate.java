@@ -18,8 +18,10 @@ public class Validate {
             }
             if(std.getFirstName() == null || std.getFirstName().isBlank()){
                 throw new StudentException("Données incompletes ");
+
             }else if(std.getLastName() == null || std.getLastName().isBlank()){
                 throw new StudentException("Données incompletes");
+                
             }else if(std.getReference() == null || std.getReference().isBlank()){
                 throw new StudentException("Données incompletes");
                 

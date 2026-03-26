@@ -1,7 +1,6 @@
 package hei.school.TD_K1.Validate;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import hei.school.TD_K1.Exception.StudentException;
 
@@ -20,4 +19,6 @@ public class GetStudentValidate {
             
         }
     }
+
+
 }
