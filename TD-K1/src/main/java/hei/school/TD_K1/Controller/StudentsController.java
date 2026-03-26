@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hei.school.TD_K1.Entity.StudentEntity;
 import hei.school.TD_K1.Services.StudentServices;
+import hei.school.TD_K1.Validate.GetStudentValidate;
 import hei.school.TD_K1.Validate.Validate;
 
 import java.util.List;
@@ -30,6 +31,9 @@ public class StudentsController {
     @Autowired
     private StudentServices studentServices;
 
+    @Autowired 
+    private GetStudentValidate getStudentvalidate;
+
     @GetMapping("/welcome")
     public ResponseEntity<String> welcomeUser(@RequestParam String name) {
 
@@ -51,25 +55,22 @@ public class StudentsController {
 
             return ResponseEntity.status(HttpStatus.CREATED).body(studentList);
         } catch (Exception e) {
-            throw new Exception(e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("");
         }
     }
 
     @GetMapping("/student")
     public ResponseEntity<?> getAllStudents(@RequestHeader(value = "Accept", required = false) String acceptHeader) {
-        try{
-       if (acceptHeader == null) {
-            return ResponseEntity.status(HttpStatusCode.valueOf(400)).body("Accept doit être requis");
-            
-        }
+        try {
+            getStudentvalidate.getStudentHeaderValidate(acceptHeader);
 
+            String studentList = studentServices.getAllStudentsServices();
 
-        else{
-            return ResponseEntity.status(HttpStatusCode.valueOf(501)).body("Format non supporté");
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(studentList);
+        } catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("");
         }
-        }catch(Exception e){
-            return ResponseEntity.status(500).body(e);
-        }        
     }
     
 }
