@@ -6,6 +6,7 @@ import org.springframework.web.server.UnsupportedMediaTypeStatusException;
 
 import hei.school.TD_K1.Entity.StudentEntity;
 import hei.school.TD_K1.Exception.StudentException;
+import hei.school.TD_K1.Exception.UnsupportedMediaTypeException;
 import hei.school.TD_K1.Services.StudentServices;
 import hei.school.TD_K1.Validate.GetStudentValidate;
 import hei.school.TD_K1.Validate.Validate;
@@ -69,7 +70,7 @@ public class StudentsController {
             String studentList = studentServices.getAllStudentsServices();
 
             return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(studentList);
-        } catch(UnsupportedMediaTypeStatusException e){
+        } catch(UnsupportedMediaTypeException e){
             return ResponseEntity.status(HttpStatusCode.valueOf(501)).body(e.getMessage());
         }
         catch (StudentException e) {

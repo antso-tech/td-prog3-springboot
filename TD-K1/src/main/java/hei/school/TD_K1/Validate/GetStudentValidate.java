@@ -3,6 +3,7 @@ package hei.school.TD_K1.Validate;
 import org.springframework.stereotype.Component;
 
 import hei.school.TD_K1.Exception.StudentException;
+import hei.school.TD_K1.Exception.UnsupportedMediaTypeException;
 
 @Component
 public class GetStudentValidate {
@@ -15,10 +16,11 @@ public class GetStudentValidate {
         boolean jsonVerified = AcceptRequest.contains("text/plain") || AcceptRequest.contains("application/json");
 
         if (!jsonVerified) {
-            throw new StudentException("Format non supporté");
+            throw new UnsupportedMediaTypeException("Format non supporté");
             
         }
     }
+
 
 
 }
